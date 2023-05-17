@@ -1,4 +1,4 @@
-# Restormer: A General U-Shaped Transformer for Image Restoration
+# Restormer: Efficient Transformer for High-Resolution Image Denoising
 
 
 ## Package dependencies
@@ -18,14 +18,14 @@ python3 generate_patches_SIDD.py --src_dir ../SIDD_Medium_Srgb/Data --tar_dir ..
 
 ## Training
 ### Denoising
-To train Uformer on SIDD, you can begin the training by:
+To train on SIDD, you can begin the training by:
 
 ```sh
 sh script/train_denoise.sh
 ```
 
 ## Evaluation
-To evaluate Uformer, you can run:
+To evaluate, you can run:
 
 ```sh
 sh script/test.sh
