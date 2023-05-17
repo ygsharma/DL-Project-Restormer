@@ -30,3 +30,11 @@ To evaluate, you can run:
 ```sh
 sh script/test.sh
 ```
+
+## Computational Cost
+
+We provide a simple script to calculate the flops by ourselves, a simple script has been added in `model.py`. You can change the configuration and run:
+
+```python
+python3 model.py
+```
