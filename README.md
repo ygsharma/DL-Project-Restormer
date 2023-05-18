@@ -44,7 +44,7 @@ python3 model.py
 ```
 
 
-###Repository Structure
+##Repository Structure
 dataset/data_senoise.py contains code for cleaning and loading the training data.
 
 /script: Contains two files train_denoise.sh and test.sh.
