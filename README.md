@@ -29,8 +29,8 @@ To train on SIDD, you can begin the training by:
 sh script/train_denoise.sh
 ```
 
-## Evaluation
-To evaluate, you can run:
+## Testing on DND
+To test, you can run:
 
 ```sh
 sh script/test.sh
