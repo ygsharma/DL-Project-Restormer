@@ -10,6 +10,9 @@ pip install -r requirements.txt
 ## Results from the best trained model
 - Restormer_B: [SIDD](https://cloud.neuronsquare.com/s/6yEHYTRxDAmX2er)
 
+## Test Results from trained model
+- Restormer_Test: [DND](https://cloud.neuronsquare.com/s/xA9QbCMFTHxLrgg)
+
 
 ## Data preparation 
 ### Denoising
