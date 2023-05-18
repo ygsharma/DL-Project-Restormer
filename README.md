@@ -50,10 +50,8 @@ python3 model.py
 
 | Files | Description |
 | ----------- | ----------- |
-| `/dataset/data_senoise.py` | contains code for cleaning and loading the training data. |
-| `/script` | Contains two files train_denoise.sh and test.sh. |
-| `/script/train.sh` | contains the code to run the model for training. |
-| `/script/test.sh` | contains the code to run the model for testing. |
+| `/dataset/data_senoise.py` | contains code for cleaning and loading the data for training, validating and testing. |
+| `/script` | contains files to run the model for training and testing. |
 | `/train/train_denoise.py` | contains the code for training the model on SIDD dataset.|
 | `/test/test_denoise.py` | contains the code for testing the model on DND dataset. |
 | `/utils` | contains basic utility functions for models, I/O operations, bundling, image manipulations, etc. |
