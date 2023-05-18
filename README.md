@@ -44,28 +44,28 @@ python3 model.py
 ```
 
 
-##Repository Structure
+## Repository Structure
 dataset/data_senoise.py contains code for cleaning and loading the training data.
 
-/script: Contains two files train_denoise.sh and test.sh.
+`/script`: Contains two files train_denoise.sh and test.sh.
 
--/script/train.sh: This file contains the code to run the model for training.
+-`/script/train.sh`: This file contains the code to run the model for training.
 
--/script/test.sh: This file contains the code to run the model for testing.
+-`/script/test.sh`: This file contains the code to run the model for testing.
 
-train/train_denoise.py: This file contains the code for training the model on SIDD dataset.
+`train/train_denoise.py`: This file contains the code for training the model on SIDD dataset.
 
-test/test_denoise.py: This file contains the code for testing the model on DND dataset.
-
-
-/warmup_scheduler: It contains the files which has code for creating different types of dynamic scheduler so that the learning should be stable.
+`test/test_denoise.py`: This file contains the code for testing the model on DND dataset.
 
 
-model.py: It contains the model architecture of the Neuran Network.
+`/warmup_scheduler`: It contains the files which has code for creating different types of dynamic scheduler so that the learning should be stable.
 
-generate_pathches_SIDD.py: It contains the code for generating the image patches from the dataset for training and testing.
 
-losses.py: It contains different types of losses that can be used for the neural network architecture.
+`model.py`: It contains the model architecture of the Neuran Network.
+
+`generate_pathches_SIDD.py`: It contains the code for generating the image patches from the dataset for training and testing.
+
+`losses.py`: It contains different types of losses that can be used for the neural network architecture.
 
 
 
