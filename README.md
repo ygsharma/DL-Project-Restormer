@@ -7,6 +7,9 @@ The project is built with PyTorch 1.9.0, Python3.7, CUDA11.1. For package depend
 pip install -r requirements.txt
 ```
 
+## Results from the best trained model
+- Restormer_B: [SIDD](https://cloud.neuronsquare.com/s/6yEHYTRxDAmX2er)
+
 
 ## Data preparation 
 ### Denoising
