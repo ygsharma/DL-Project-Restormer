@@ -1,5 +1,6 @@
 # Restormer: Efficient Transformer for High-Resolution Image Denoising
-
+---
+*While Convolutional Neural Networks (CNNs) have excelled in learning image priors from large-scale data, Transformers have shown superior performance in natural language and high-level vision tasks. However, Transformers are computationally complex for image restoration tasks with high-resolution images due to their quadratic growth with spatial resolution. To address this issue, the authors propose an efficient Transformer model called Restoration Transformer (Restormer). Restormer incorporates key design modifications in multi-head attention and feed-forward networks to capture long-range pixel interactions while remaining applicable to large images. Restormer achieves state-of-the-art results in various image restoration tasks.*
 
 ## Package dependencies
 The project is built with PyTorch 1.9.0, Python3.7, CUDA11.1. For package dependencies, you can install them by:
@@ -45,27 +46,22 @@ python3 model.py
 
 
 ## Repository Structure
-dataset/data_senoise.py contains code for cleaning and loading the training data.
+---
 
--`/script`: Contains two files train_denoise.sh and test.sh.
-
-`/script/train.sh`: This file contains the code to run the model for training.
-
-`/script/test.sh`: This file contains the code to run the model for testing.
-
--`train/train_denoise.py`: This file contains the code for training the model on SIDD dataset.
-
--`test/test_denoise.py`: This file contains the code for testing the model on DND dataset.
-
-
--`/warmup_scheduler`: It contains the files which has code for creating different types of dynamic scheduler so that the learning should be stable.
-
-
--`model.py`: It contains the model architecture of the Neuran Network.
-
--`generate_pathches_SIDD.py`: It contains the code for generating the image patches from the dataset for training and testing.
-
--`losses.py`: It contains different types of losses that can be used for the neural network architecture.
-
+| Files | Description |
+| ----------- | ----------- |
+| `/dataset/data_senoise.py` | contains code for cleaning and loading the training data. |
+| `/script` | Contains two files train_denoise.sh and test.sh. |
+| `/script/train.sh` | contains the code to run the model for training. |
+| `/script/test.sh` | contains the code to run the model for testing. |
+| `/train/train_denoise.py` | contains the code for training the model on SIDD dataset.|
+| `/test/test_denoise.py` | contains the code for testing the model on DND dataset. |
+| `/utils` | contains basic utility functions for models, I/O operations, bundling, image manipulations, etc. |
+| `/warmup_scheduler` | contains the files which has code for creating different types of dynamic scheduler so that the learning should be stable. |
+| `/model.py` | contains the model architecture of the Restormer. |
+| `/generate_pathches_SIDD.py` | contains the code for generating the image patches from the dataset for training and testing. |
+| `/losses.py` | contains different types of losses that can be used for the neural network architecture. |
+| `/options.py` | describes various CLI args to use the project functionalties. |
+ 
 
 
