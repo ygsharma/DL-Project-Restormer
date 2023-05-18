@@ -65,7 +65,7 @@ dataset/data_senoise.py contains code for cleaning and loading the training data
 
 -`generate_pathches_SIDD.py`: It contains the code for generating the image patches from the dataset for training and testing.
 
-`losses.py`: It contains different types of losses that can be used for the neural network architecture.
+-`losses.py`: It contains different types of losses that can be used for the neural network architecture.
 
 
 
