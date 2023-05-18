@@ -19,10 +19,6 @@ from torch.utils.data import DataLoader
 import torch.nn.functional as F
 from ptflops import get_model_complexity_info
 
-dir_name = os.path.dirname(os.path.abspath(__file__))
-sys.path.append(os.path.join(dir_name, '../dataset/'))
-sys.path.append(os.path.join(dir_name, '..'))
-
 
 parser = argparse.ArgumentParser(
     description='Image denoising evaluation on SIDD')
@@ -78,8 +74,8 @@ utils.mkdir(result_dir_mat)
 result_dir_img = os.path.join(args.result_dir, 'png')
 utils.mkdir(result_dir_img)
 
-# test_dataset = get_validation_data(args.input_dir)
-# test_loader = DataLoader(dataset=test_dataset, batch_size=1, shuffle=False, num_workers=8, drop_last=False)
+test_dataset = get_validation_data(args.input_dir)
+test_loader = DataLoader(dataset=test_dataset, batch_size=1, shuffle=False, num_workers=8, drop_last=False)
 
 model_restoration = utils.get_arch(args)
 
@@ -107,32 +103,96 @@ def expand2square(timg, factor=16.0):
 
     return img, mask
 
-
+"""
 # Process data
 filepath = os.path.join(args.input_dir, 'ValidationNoisyBlocksSrgb.mat')
 img = sio.loadmat(filepath)
 Inoisy = np.float32(np.array(img['ValidationNoisyBlocksSrgb']))
 Inoisy /= 255.
 print(Inoisy.shape)
+
+# process 
+filepath = os.path.join(args.input_dir, 'ValidationGtBlocksSrgb.mat')
+img = sio.loadmat(filepath)
+Gt = np.float32(np.array(img['ValidationGtBlocksSrgb']))
+Gt /= 255.
+print(Gt.shape)
+
 restored = np.zeros_like(Inoisy)
+
 with torch.no_grad():
+    psnr_val_rgb = []
+    ssim_val_rgb = []
+
     for i in tqdm(range(40)):
         for k in range(32):
+
             noisy_patch = torch.from_numpy(Inoisy[i, k, :, :, :]).unsqueeze(
                 0).permute(0, 3, 1, 2).cuda()
+            gt_patch = torch.from_numpy(Gt[i, k, :, :, :]).unsqueeze(
+                0).permute(0, 3, 1, 2).cuda()
+            
             _, _, h, w = noisy_patch.shape
             noisy_patch, mask = expand2square(noisy_patch, factor=128)
+
             restored_patch = model_restoration(noisy_patch)
+
             restored_patch = torch.masked_select(
                 restored_patch, mask.bool()).reshape(1, 3, h, w)
+            
             restored_patch = torch.clamp(restored_patch, 0, 1).cpu(
             ).detach().permute(0, 2, 3, 1).squeeze(0)
+
+            # gt_patch = torch.clamp(gt_patch, 0, 1).cpu().detach().permute(0, 2, 3, 1).squeeze(0)
+            print("shape after prediction:")
+            print(gt_patch.shape, restored_patch.shape)
+
             restored[i, k, :, :, :] = restored_patch
 
             save_file = os.path.join(
                 result_dir_img, '%04d_%02d.png' % (i+1, k+1))
+            
+            psnr = psnr_loss(restored_patch, gt_patch)
+            ssim = ssim_loss(restored_patch, gt_patch, multichannel=True)
+            print("PSNR:",psnr,", SSIM:", ssim, '%04d_%02d.png' % (i+1, k+1), restored_patch.shape)
+
+            psnr_val_rgb.append(psnr)
+            ssim_val_rgb.append(ssim)
+
             utils.save_img(save_file, img_as_ubyte(restored_patch))
+
+psnr_val_rgb = sum(psnr_val_rgb)/1280
+ssim_val_rgb = sum(ssim_val_rgb)/1280
+print("PSNR: %f, SSIM: %f " %(psnr_val_rgb,ssim_val_rgb))
 
 # save denoised data
 sio.savemat(os.path.join(result_dir_mat, 'Idenoised.mat'),
             {"Idenoised": restored, })
+
+"""
+
+with torch.no_grad():
+    psnr_val_rgb = []
+    ssim_val_rgb = []
+    for ii, data_test in enumerate(tqdm(test_loader), 0):
+        rgb_gt = data_test[0].numpy().squeeze().transpose((1,2,0))
+        rgb_noisy, mask = expand2square(data_test[1].cuda(), factor=128) 
+        filenames = data_test[2]
+
+        rgb_restored = model_restoration(rgb_noisy)
+        rgb_restored = torch.masked_select(rgb_restored,mask.bool()).reshape(1,3,rgb_gt.shape[0],rgb_gt.shape[1])
+        rgb_restored = torch.clamp(rgb_restored,0,1).cpu().numpy().squeeze().transpose((1,2,0))
+
+        psnr = psnr_loss(rgb_restored, rgb_gt)
+        ssim = ssim_loss(rgb_restored, rgb_gt, multichannel=True)
+        psnr_val_rgb.append(psnr)
+        ssim_val_rgb.append(ssim)
+        print("PSNR:",psnr,", SSIM:", ssim, filenames[0], rgb_restored.shape)
+        utils.save_img(os.path.join(args.result_dir,filenames[0]+'.PNG'), img_as_ubyte(rgb_restored))
+        with open(os.path.join(args.result_dir,'psnr_ssim.txt'),'a') as f:
+            f.write(filenames[0]+'.PNG ---->'+"PSNR: %.4f, SSIM: %.4f] "% (psnr, ssim)+'\n')
+psnr_val_rgb = sum(psnr_val_rgb)/len(test_dataset)
+ssim_val_rgb = sum(ssim_val_rgb)/len(test_dataset)
+print("PSNR: %f, SSIM: %f " %(psnr_val_rgb,ssim_val_rgb))
+with open(os.path.join(args.result_dir,'psnr_ssim.txt'),'a') as f:
+    f.write("Arch:"+args.arch+", PSNR: %.4f, SSIM: %.4f] "% (psnr_val_rgb, ssim_val_rgb)+'\n')
