@@ -49,9 +49,9 @@ dataset/data_senoise.py contains code for cleaning and loading the training data
 
 -`/script`: Contains two files train_denoise.sh and test.sh.
 
--`/script/train.sh`: This file contains the code to run the model for training.
+`/script/train.sh`: This file contains the code to run the model for training.
 
--`/script/test.sh`: This file contains the code to run the model for testing.
+`/script/test.sh`: This file contains the code to run the model for testing.
 
 -`train/train_denoise.py`: This file contains the code for training the model on SIDD dataset.
 
