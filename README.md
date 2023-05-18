@@ -14,16 +14,14 @@ pip install -r requirements.txt
 - Restormer_Test: [DND](https://cloud.neuronsquare.com/s/xA9QbCMFTHxLrgg)
 
 
-## Data preparation 
-### Denoising
+## Data preparation for Denoising 
 For training data of SIDD, you can download the SIDD-Medium dataset from the [official url](https://www.eecs.yorku.ca/~kamel/sidd/dataset.php).
 Then generate training patches for training by:
 ```python
 python3 generate_patches_SIDD.py --src_dir ../SIDD_Medium_Srgb/Data --tar_dir ../datasets/denoising/sidd/train
 ```
 
-## Training
-### Denoising
+## Training on SIDD Denoising
 To train on SIDD, you can begin the training by:
 
 ```sh
