@@ -37,9 +37,9 @@ sh script/test.sh
 ```
 
 ## Denoised Image Sample
-On left side --> Noisy/Degraded Image  
+On left side (Input) --> Noisy/Degraded Image  
   
-On right side --> Denoised Image
+On right side (Output) --> Denoised Image
 ![PNG%20image](https://github.com/ygsharma/DL-Project-Restormer/assets/52563094/f34e4fab-f1a4-409c-a5be-6f927eac4922)
 
 
