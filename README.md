@@ -36,6 +36,10 @@ To test, you can run:
 sh script/test.sh
 ```
 
+## Denoised Image Sample
+![PNG%20image](https://github.com/ygsharma/DL-Project-Restormer/assets/52563094/f34e4fab-f1a4-409c-a5be-6f927eac4922)
+
+
 ## Computational Cost
 
 We provide a simple script to calculate the flops by ourselves, a simple script has been added in `model.py`. You can change the configuration and run:
